@@ -89,19 +89,22 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        // Set the TextViews to the right values
-        binding.revenue = revenue
-        binding.amountSold = dessertsSold
 
-        // Make sure the correct dessert is showing
-        binding.dessertButton.setImageResource(currentDessert.imageId)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        outState.putInt("revenue", revenue)
+        outState.putInt("dessertsSold", dessertsSold)
 
         Log.d(TAG, "onSaveInstanceState Called")
-    
+
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        revenue = savedInstanceState.getInt("revenue")
+        dessertsSold =  savedInstanceState.getInt("dessertsSold")
     }
 
 
@@ -119,6 +122,16 @@ class MainActivity : AppCompatActivity() {
 
         // Show the next dessert
         showCurrentDessert()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Set the TextViews to the right values
+        binding.revenue = revenue
+        binding.amountSold = dessertsSold
+
+        // Make sure the correct dessert is showing
+        binding.dessertButton.setImageResource(currentDessert.imageId)
     }
 
     /**
